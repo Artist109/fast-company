@@ -18,7 +18,9 @@ function App() {
       )
     );
   };
-
+  // semi: [2, "always"],
+  // "space-before-function-paren": ["error", "never"],
+  // quotes: ["error", "double", { allowTemplateLiterals: true }]
   return (
     <div>
       <SearchStatus length={users.length} />
