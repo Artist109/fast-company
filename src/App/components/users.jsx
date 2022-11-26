@@ -14,7 +14,13 @@ const Users = ({ users, ...rest }) => {
   const pageSize = 4;
 
   useEffect(() => {
-    API.professions.fetchAll().then((data) => setProfessions(data));
+    API.professions
+      .fetchAll()
+      .then((data) =>
+        setProfessions(
+          Object.assign(data, { allProfession: { name: "Все проффесии" } })
+        )
+      );
   }, []);
 
   const handeProfessionSelect = (item) => {
@@ -25,19 +31,26 @@ const Users = ({ users, ...rest }) => {
     setCurrentPage(pageIndex);
   };
 
-  const filteredUsers = selectedProf
-    ? users.filter((user) => user.profession === selectedProf)
-    : users;
+  const filteredUsers =
+    selectedProf && selectedProf._id
+      ? users.filter((user) => user.profession === selectedProf)
+      : users;
   const userCrop = paginate(filteredUsers, currentPage, pageSize);
+  const clearFilter = () => {};
 
   return (
     <>
       {professions && (
-        <GroupList
-          selectedItem={selectedProf}
-          items={professions}
-          onItemSelect={handeProfessionSelect}
-        />
+        <>
+          <GroupList
+            selectedItem={selectedProf}
+            items={professions}
+            onItemSelect={handeProfessionSelect}
+          />
+          <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+            Очистить
+          </button>
+        </>
       )}
 
       {count > 0 && (
