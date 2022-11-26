@@ -1,24 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import User from "./user";
 import PropTypes from "prop-types";
+import GroupList from "./groupList";
+import API from "../api";
 
-// import * as paginate from '../utils/paginate'
 const Users = ({ users, ...rest }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [professions, setProfessions] = useState();
+  const [selectedProf, setSelectedProf] = useState();
   const count = users.length;
   const pageSize = 4;
 
-  const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    API.professions.fetchAll().then((data) => setProfessions(data));
+  }, []);
+
+  const handeProfessionSelect = (item) => {
+    setSelectedProf(item);
+  };
 
   const handlePageChange = (pageIndex) => {
-    // console.log("pageIndex", pageIndex);
     setCurrentPage(pageIndex);
   };
 
-  const userCrop = paginate(users, currentPage, pageSize);
+  const filteredUsers = selectedProf
+    ? users.filter((user) => user.profession === selectedProf)
+    : users;
+  const userCrop = paginate(filteredUsers, currentPage, pageSize);
+
   return (
     <>
+      {professions && (
+        <GroupList
+          selectedItem={selectedProf}
+          items={professions}
+          onItemSelect={handeProfessionSelect}
+        />
+      )}
+
       {count > 0 && (
         <table className="table">
           <thead>
