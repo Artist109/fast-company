@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Users from "./components/users";
-import SearchStatus from "./components/searchStatus";
-import api from "./api";
+import API from "./api";
 
 function App() {
-  const [users, setUsers] = useState(api.users.fetchAll());
-
+  const [users, setUsers] = useState(API.users.fetchAll());
+  // useEffect(() => {
+  //   API.users.fetchAll().then((data) => setUsers(data));
+  // });
   const handleDelete = (userId) => {
     setUsers(users.filter((user) => user._id !== userId));
   };
@@ -18,12 +19,9 @@ function App() {
       )
     );
   };
-  // semi: [2, "always"],
-  // "space-before-function-paren": ["error", "never"],
-  // quotes: ["error", "double", { allowTemplateLiterals: true }]
+
   return (
     <div>
-      <SearchStatus length={users.length} />
       <Users
         onDelete={handleDelete}
         onToggleBookMark={handleToggleBookMark}

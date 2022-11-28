@@ -6,7 +6,6 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
   const pageCount = Math.ceil(itemsCount / pageSize);
   const pagesNumber = _.range(1, pageCount + 1);
   if (pageCount === 1) return null;
-  // console.log(pagesNumber);
   return (
     <nav>
       <ul className="pagination">
@@ -29,6 +28,6 @@ Pagination.propTypes = {
   itemsCount: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
-  currentPage: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired
 };
 export default Pagination;
