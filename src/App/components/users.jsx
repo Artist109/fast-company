@@ -29,8 +29,13 @@ const Users = ({ users, ...rest }) => {
   };
 
   const filteredUsers = selectedProf
-    ? users.filter((user) => user.profession === selectedProf)
+    ? users.filter(
+        (user) =>
+          JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+      )
     : users;
+  console.log("filteredUsers", filteredUsers);
+
   const count = filteredUsers.length;
 
   const userCrop = paginate(filteredUsers, currentPage, pageSize);
@@ -91,7 +96,6 @@ const Users = ({ users, ...rest }) => {
 
 Users.propTypes = {
   users: PropTypes.array.isRequired
-  // users: PropTypes.oneOfType([PropTypes.object], [PropTypes.array]).isRequired
 };
 
 export default Users;
