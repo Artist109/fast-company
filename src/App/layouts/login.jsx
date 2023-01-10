@@ -47,6 +47,8 @@ const Login = () => {
     return Object.keys(errors).length === 0;
   };
 
+  const isValid = Object.keys(errors).length === 0;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // const isValid = validate();
@@ -54,24 +56,37 @@ const Login = () => {
     console.log(data);
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        label="Email"
-        name="email"
-        value={data.email}
-        onChange={handlerOnChange}
-        error={errors.email}
-      />
-      <TextField
-        label="Пароль"
-        type="password"
-        name="password"
-        value={data.password}
-        onChange={handlerOnChange}
-        error={errors.password}
-      />
-      <button>Отправить</button>
-    </form>
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6 offset-md-3 p-4 shadow rounded">
+          <h3 className="mb-4">Авторизоваться</h3>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="Email"
+              name="email"
+              value={data.email}
+              onChange={handlerOnChange}
+              error={errors.email}
+            />
+            <TextField
+              label="Пароль"
+              type="password"
+              name="password"
+              value={data.password}
+              onChange={handlerOnChange}
+              error={errors.password}
+            />
+            <button
+              className="btn btn-primary w-100 mx-auto"
+              type="submit"
+              disabled={!isValid}
+            >
+              Отправить
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
