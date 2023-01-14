@@ -1,40 +1,39 @@
 export function validator(data, config) {
   const errors = {};
-
-  function validate(validateMethod, data, output) {
-    let validationStatus;
+  function validate(validateMethod, data, config) {
+    let statusValidate;
     switch (validateMethod) {
-      case "isRequired":
-        validationStatus = data.trim() === "";
+      case "isRequired": {
+        if (typeof data === "boolean") {
+          statusValidate = !data;
+        } else {
+          statusValidate = data.trim() === "";
+        }
         break;
+      }
       case "isEmail": {
-        const checkEmailRegExp = /^\S+@\S+\.\S+$/g;
-        validationStatus = !checkEmailRegExp.test(data);
+        const emailRegExp = /^\S+@\S+\.\S+$/g;
+        statusValidate = !emailRegExp.test(data);
         break;
       }
-      case "hasCapital": {
-        const hasCapitalRegExp = /[A-Z]/g;
-        validationStatus = !hasCapitalRegExp.test(data);
+      case "isCapitalSymbol": {
+        const capitalRegExp = /[A-Z]+/g;
+        statusValidate = !capitalRegExp.test(data);
         break;
       }
-      case "hasDigit": {
-        const hasDigitRegExp = /\d+/g;
-        validationStatus = !hasDigitRegExp.test(data);
+      case "isContainDigit": {
+        const digitRegExp = /\d+/g;
+        statusValidate = !digitRegExp.test(data);
         break;
       }
-      case "hasWhitespace": {
-        const hasWhitespaceRegExp = /\s/g;
-        validationStatus = hasWhitespaceRegExp.test(data);
-        break;
-      }
-      case "hasMinLength": {
-        validationStatus = data.length < output.value;
+      case "min": {
+        statusValidate = data.length < config.value;
         break;
       }
       default:
         break;
     }
-    if (validationStatus) return output.message;
+    if (statusValidate) return config.message;
   }
   for (const fieldName in data) {
     for (const validateMethod in config[fieldName]) {

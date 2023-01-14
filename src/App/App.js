@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import NavBar from "./components/navbar";
+import NavBar from "./components/ui/navbar";
 
 import Main from "./layouts/main";
 import Login from "./layouts/login";
@@ -13,7 +13,7 @@ function App() {
       <NavBar />
       <Switch>
         <Route exact path={"/"} component={Main}></Route>
-        <Route path={"/login"} component={Login}></Route>
+        <Route path={"/login:type?"} component={Login}></Route>
         <Route path={"/users/:userId?"} component={Users}></Route>
         <Redirect to={Main} />
       </Switch>

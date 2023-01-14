@@ -19,6 +19,7 @@ module.exports = {
     quotes: ["error", "double", { allowTemplateLiterals: true }],
     "comma-dangle": "off",
     "@typescript-eslint/comma-dangle": "off",
-    indent: "off"
+    indent: "off",
+    "multiline-ternary": ["off"]
   }
 };
