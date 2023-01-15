@@ -9,9 +9,9 @@ const UserPage = ({ userId }) => {
   const history = useHistory();
   useEffect(() => {
     API.users.getById(userId).then((data) => setUser(data));
-  });
+  }, []);
   const handleClick = () => {
-    history.push("/users");
+    history.push(history.location.pathname + "/edit");
   };
   if (user) {
     return (
@@ -35,7 +35,7 @@ const UserPage = ({ userId }) => {
           <h3>Рейтинг</h3>
           <p>{user.rate}</p>
         </div>
-        <button onClick={handleClick}>{"Все пользователи —>"}</button>
+        <button onClick={handleClick}>{"Изменить —>"}</button>
       </div>
     );
   } else {
