@@ -60,7 +60,7 @@ const remove = (id) =>
   new Promise((resolve) => {
     window.setTimeout(function () {
       const comments = JSON.parse(localStorage.getItem("comments"));
-      const newComments = comments.filter((x) => x._id !== id);
+      const newComments = comments.filter((com) => com._id !== id);
       console.log(id);
       console.log(newComments);
       localStorage.setItem("comments", JSON.stringify(newComments));

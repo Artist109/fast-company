@@ -20,7 +20,7 @@ const UserPage = ({ userId }) => {
           <div className="col-md-4 mb-3">
             <UserCard user={user} />
             <QualitiesCard qualities={user.qualities} />
-            <MeetingsCard meetings={user.rate} />
+            <MeetingsCard meetings={user.completedMeetings} />
           </div>
 
           <div className="col-md-8">
@@ -28,29 +28,6 @@ const UserPage = ({ userId }) => {
           </div>
         </div>
       </div>
-
-      //  <div className="m-2">
-      //    <h1>{user.name}</h1>
-      //    <div>
-      //      <h3>Профессия</h3>
-      //      <p>{user.profession.name}</p>
-      //    </div>
-      //    <div>
-      //      <h3>Качества</h3>
-      //      <p>
-      //        <Qualities qualities={user.qualities} />
-      //      </p>
-      //    </div>
-      //    <div>
-      //      <h3>Встретился, раз</h3>
-      //      <p>{user.completedMeetings}</p>
-      //    </div>
-      //    <div>
-      //      <h3>Рейтинг</h3>
-      //      <p>{user.rate}</p>
-      //    </div>
-      //    <button onClick={handleClick}>{"Изменить —>"}</button>
-      //  </div>
     );
   } else {
     return <h1>{"...loading"}</h1>;
