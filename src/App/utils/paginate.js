@@ -1,3 +1,4 @@
-export function paginate(items, currentPage, pageSize) {
-  return [...items].splice((currentPage - 1) * pageSize, pageSize);
+export function paginate(items, pageNumber, pageSize) {
+    const startIndex = (pageNumber - 1) * pageSize;
+    return [...items].splice(startIndex, pageSize);
 }

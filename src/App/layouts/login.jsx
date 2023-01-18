@@ -1,51 +1,52 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import LoginForm from "../components/ui/loginForm";
-import RegistrationForm from "../components/ui/registrationForm";
+import RegisterForm from "../components/ui/registerForm";
 
 const Login = () => {
-  const { type } = useParams();
+    const { type } = useParams();
+    const [formType, setFormType] = useState(
+        type === "register" ? type : "login"
+    );
+    const toggleFormType = (params) => {
+        setFormType((prevState) =>
+            prevState === "register" ? "login" : "register"
+        );
+    };
 
-  const [formType, setFormType] = useState(
-    type === "registration" ? type : "login"
-  );
-
-  const toogleChangeType = (type) => {
-    setFormType((prev) => (prev === "registration" ? "login" : "registration"));
-  };
-  return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3 p-4 shadow rounded">
-          {formType === "registration" ? (
-            <>
-              <h3 className="m-4">Зарегистрироваться</h3>
-
-              <RegistrationForm />
-              <p>
-                У вас уже есть аккаунт?{" "}
-                <a role="button" onClick={toogleChangeType}>
-                  Войти
-                </a>
-              </p>
-            </>
-          ) : (
-            <>
-              <h3 className="m-4">Авторизоваться</h3>
-
-              <LoginForm />
-              <p>
-                У вас ешё нет аккаунта?{" "}
-                <a role="button" onClick={toogleChangeType}>
-                  Зарегистрироваться
-                </a>
-              </p>
-            </>
-          )}
+    return (
+        <div className="container mt-5">
+            <div className="row">
+                <div className="col-md-6 offset-md-3 shadow p-4">
+                    {formType === "register" ? (
+                        <>
+                            <h3 className="mb-4">Register</h3>
+                            <RegisterForm />
+                            <p>
+                                Already have account?{" "}
+                                <a role="button" onClick={toggleFormType}>
+                                    {" "}
+                                    Sign In
+                                </a>
+                            </p>
+                        </>
+                    ) : (
+                        <>
+                            <h3 className="mb-4">Login</h3>
+                            <LoginForm />
+                            <p>
+                                Dont have account?{" "}
+                                <a role="button" onClick={toggleFormType}>
+                                    {" "}
+                                    Sign Up
+                                </a>
+                            </p>
+                        </>
+                    )}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Login;

@@ -1,24 +1,35 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-
-import NavBar from "./components/ui/navbar";
-
-import Main from "./layouts/main";
-import Login from "./layouts/login";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Users from "./layouts/users";
+import Login from "./layouts/login";
+import Main from "./layouts/main";
+import NavBar from "./components/ui/navBar";
+import { ProfessionProvider } from "./hooks/useProfession";
+import { QualitiesProvider } from "./hooks/useQualities";
 
 function App() {
-  return (
-    <>
-      <NavBar />
-      <Switch>
-        <Route exact path={"/"} component={Main}></Route>
-        <Route path={"/login:type?"} component={Login}></Route>
-        <Route path={"/users/:userId?/:edit?"} component={Users}></Route>
-        <Redirect to={Main} />
-      </Switch>
-    </>
-  );
+    return (
+        <div>
+            <NavBar />
+
+            <QualitiesProvider>
+                <ProfessionProvider>
+                    <Switch>
+                        <Route
+                            path="/users/:userId?/:edit?"
+                            component={Users}
+                        />
+                        <Route path="/login/:type?" component={Login} />
+                        <Route path="/" exact component={Main} />
+                        <Redirect to="/" />
+                    </Switch>
+                </ProfessionProvider>
+            </QualitiesProvider>
+
+            <ToastContainer />
+        </div>
+    );
 }
 
 export default App;
