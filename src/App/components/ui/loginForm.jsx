@@ -4,8 +4,10 @@ import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
+console.log(process.env);
 
 const LoginForm = () => {
+    console.log(process.env);
     const [data, setData] = useState({
         email: "",
         password: "",
