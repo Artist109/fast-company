@@ -27,7 +27,6 @@ module.exports = {
                 allowTemplateLiterals: true,
                 avoidEscape: true
             }
-        ],
-        "eslint.workingDirectories": [{ mode: "auto" }]
+        ]
     }
 };
