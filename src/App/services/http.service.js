@@ -14,7 +14,6 @@ http.interceptors.request.use(
             const containSlash = /\/$/gi.test(config.url);
             config.url =
                 (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
-            console.log("config.url", config.url);
             const expiresDate = localStorageService.getTokenExpiresDate();
             const refreshToken = localStorageService.getRefreshToken();
             if (refreshToken && expiresDate < Date.now()) {
@@ -35,7 +34,6 @@ http.interceptors.request.use(
                 config.params = { ...config.params, auth: accessToken };
             }
         }
-        console.log("config", config);
         return config;
     },
     function (error) {
@@ -63,7 +61,6 @@ http.interceptors.response.use(
             error.response.status < 500;
 
         if (!expectedErrors) {
-            console.log(error);
             toast.error("Something was wrong. Try it later");
         }
         return Promise.reject(error);
@@ -73,6 +70,7 @@ const httpService = {
     get: http.get,
     post: http.post,
     put: http.put,
-    delete: http.delete
+    delete: http.delete,
+    patch: http.patch
 };
 export default httpService;
