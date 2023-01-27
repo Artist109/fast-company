@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
-
+import { useHistory } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
@@ -8,23 +7,23 @@ import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
 import { useAuth } from "../../../hooks/useAuth";
-import { useProfessions } from "../../../hooks/useProfession";
 import { useQualities } from "../../../hooks/useQualities";
+import { useProfessions } from "../../../hooks/useProfession";
 
 const EditUserPage = () => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState();
     const { currentUser, updateUserData } = useAuth();
-    const { professions, isLoading: professionsLoading } = useProfessions();
-    const professionsList = professions.map((p) => ({
-        label: p.name,
-        value: p._id
-    }));
     const { qualities, isLoading: qualitiesLoading } = useQualities();
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id
+    }));
+    const { professions, isLoading: professionLoading } = useProfessions();
+    const professionsList = professions.map((p) => ({
+        label: p.name,
+        value: p._id
     }));
     const [errors, setErrors] = useState({});
 
@@ -36,12 +35,11 @@ const EditUserPage = () => {
             ...data,
             qualities: data.qualities.map((q) => q.value)
         });
+
         history.push(`/users/${currentUser._id}`);
     };
-
     function getQualitiesListByIds(qualitiesIds) {
         const qualitiesArray = [];
-
         for (const qualId of qualitiesIds) {
             for (const quality of qualities) {
                 if (quality._id === qualId) {
@@ -53,20 +51,20 @@ const EditUserPage = () => {
         return qualitiesArray;
     }
     const transformData = (data) => {
-        return getQualitiesListByIds(data).map((qual) => ({
+        const result = getQualitiesListByIds(data).map((qual) => ({
             label: qual.name,
             value: qual._id
         }));
+        return result;
     };
     useEffect(() => {
-        setIsLoading(true);
-        if (!professionsLoading && !qualitiesLoading && currentUser && !data) {
+        if (!professionLoading && !qualitiesLoading && currentUser && !data) {
             setData({
                 ...currentUser,
                 qualities: transformData(currentUser.qualities)
             });
         }
-    }, [professionsLoading, qualitiesLoading, currentUser, data]);
+    }, [professionLoading, qualitiesLoading, currentUser, data]);
     useEffect(() => {
         if (data && isLoading) {
             setIsLoading(false);

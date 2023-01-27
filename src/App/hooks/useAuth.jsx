@@ -71,7 +71,6 @@ const AuthProvider = ({ children }) => {
             errorCatcher(error);
         }
     }
-
     async function signUp({ email, password, ...rest }) {
         try {
             const { data } = await httpAuth.post(`accounts:signUp`, {
